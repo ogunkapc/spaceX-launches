@@ -1,4 +1,4 @@
-package com.example.spacexlaunches.entity
+package com.example.spacexlaunches.shared.entity
 
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant

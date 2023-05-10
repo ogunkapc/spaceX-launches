@@ -87,6 +87,6 @@ android {
 
 sqldelight {
     database("AppDatabase") {
-        packageName = "com.example.spacexlaunches.cache"
+        packageName = "com.example.spacexlaunches.shared.cache"
     }
 }
