@@ -1,0 +1,24 @@
+CREATE TABLE Launch (
+    flightNumber INTEGER NOT NULL,
+    missionName TEXT NOT NULL,
+    details TEXT,
+    launchSuccess INTEGER AS Boolean DEFAULT NULL,
+    launchDateUTC TEXT NOT NULL,
+    patchUrlSmall TEXT,
+    patchUrlLarge TEXT,
+    articleUrl TEXT
+);
+
+-- SQL insert function
+insertLaunch:
+INSERT INTO Launch(flightNumber, missionName, details, launchSuccess, launchDateUTC, patchUrlSmall, patchUrlLarge, articleUrl)
+VALUES(?, ?, ?, ?, ?, ?, ?, ?);
+
+-- SQL delete function
+removeAllLaunches:
+DELETE FROM Launch;
+
+-- function to retrieve data
+selectAllLaunchesInfo:
+SELECT Launch.*
+FROM Launch;
