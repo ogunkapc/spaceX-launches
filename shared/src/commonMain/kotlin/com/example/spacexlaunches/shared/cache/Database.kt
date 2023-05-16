@@ -1,6 +1,5 @@
 package com.example.spacexlaunches.shared.cache
 
-import com.example.spacexlaunches.cache.AppDatabase
 import com.example.spacexlaunches.shared.entity.Links
 import com.example.spacexlaunches.shared.entity.Patch
 import com.example.spacexlaunches.shared.entity.RocketLaunch

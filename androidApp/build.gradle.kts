@@ -55,4 +55,5 @@ dependencies {
     implementation("androidx.core:core-ktx:1.10.0")
     implementation("androidx.recyclerview:recyclerview:1.3.0")
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.compose.runtime:runtime:1.4.3")
 }

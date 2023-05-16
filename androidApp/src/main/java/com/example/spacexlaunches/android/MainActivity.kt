@@ -5,36 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Space
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.spacexlaunches.shared.SpaceXSDK
+import com.example.spacexlaunches.shared.cache.DatabaseDriverFactory
 import com.example.spacexlaunches.shared.entity.RocketLaunch
-
-//class MainActivity : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContent {
-//            MyApplicationTheme {
-//                Surface(
-//                    modifier = Modifier.fillMaxSize(),
-//                    color = MaterialTheme.colors.background
-//                ) {
-//                    GreetingView(Greeting().greet())
-//                }
-//            }
-//        }
-//    }
-//}
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var launchesRecyclerView: RecyclerView
     private lateinit var progressBarView: FrameLayout
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private val launchesRvAdapter = LaunchesRvAdapter(listOf())
+    private val sdk = SpaceXSDK(DatabaseDriverFactory(this))
+    private val mainScope = MainScope()
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mainScope.cancel()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +57,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayLaunches(needReload: Boolean) {
         // TODO: Presentation logic
+        progressBarView.isVisible = true
+        mainScope.launch {
+            kotlin.runCatching {
+                sdk.getLaunches(needReload)
+            }.onSuccess {
+                launchesRvAdapter.launches = it
+                launchesRvAdapter.notifyDataSetChanged()
+            }.onFailure {
+                Toast.makeText(this@MainActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
+            progressBarView.isVisible = false
+        }
     }
 }
 

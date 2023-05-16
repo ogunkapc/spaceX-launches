@@ -1,6 +1,5 @@
 package com.example.spacexlaunches.shared.cache
 
-import com.example.spacexlaunches.cache.AppDatabase
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 
